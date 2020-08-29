@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from python_traning.group import Group
-from python_traning.application import Application
+from python_traning.model.group import Group
+from python_traning.fixture.application import Application
 
 @pytest.fixture()
 def app(request):
