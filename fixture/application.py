@@ -1,26 +1,10 @@
 from selenium import webdriver
+from python_traning.fixture.session import SessionHelper
 class Application:
     def __init__(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-
-    def login(self, username, password):
-        driver = self.driver
-        # отрытие страницы
-        self.open_home_page()
-        driver.find_element_by_name("user").click()
-        driver.find_element_by_name("user").clear()
-        driver.find_element_by_name("user").send_keys(username)
-        driver.find_element_by_name("pass").click()
-        driver.find_element_by_name("pass").clear()
-        driver.find_element_by_name("pass").send_keys(password)
-        driver.find_element_by_xpath("//input[@value='Login']").click()
-
-    def logout(self):
-        driver = self.driver
-        driver.find_element_by_link_text("Logout").click()
-        driver.find_element_by_name("user").clear()
-        driver.find_element_by_name("user").send_keys("admin")
+        self.session=SessionHelper(self)
 
     def open_home_page(self):
         driver = self.driver
