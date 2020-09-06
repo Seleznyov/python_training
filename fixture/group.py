@@ -31,3 +31,13 @@ class GroupHelper:
         driver.find_element_by_name("submit").click()
         # возврат на вкладку грппы
         self.return_to_gruops_page()
+
+    def delete_first_group(self):
+        driver = self.app.driver
+        # открытие вкладки группы
+        self.open_gruops_page()
+        #выбрать группу певрую
+        driver.find_element_by_name("selected[]").click()
+        # кликнуть удалить
+        driver.find_element_by_name("delete").click()
+        self.return_to_gruops_page()

@@ -1,6 +1,6 @@
 from selenium import webdriver
 from python_traning.fixture.session import SessionHelper
-from  python_traning.fixture.group import GroupHelper
+from python_traning.fixture.group import GroupHelper
 
 class Application:
     def __init__(self):
