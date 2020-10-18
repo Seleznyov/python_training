@@ -11,7 +11,8 @@ class Application:
 
     def is_valid(self):
         try:
-            self.driver.current_url()
+            # Скобки не нужны не работал с ними
+            self.driver.current_url
             return True
         except:
             return False

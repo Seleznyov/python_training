@@ -1,3 +1,4 @@
+from python_traning.model.group import Group
 
 class GroupHelper:
     def __init__(self,app):
@@ -23,6 +24,8 @@ class GroupHelper:
         driver.find_element_by_name("submit").click()
         # возврат на вкладку грппы
         self.return_to_gruops_page()
+        # Сбрасываем кэш
+        self.group_cache = None
 
     def change_field_value(self, field_value,text):
         driver = self.app.driver
@@ -38,22 +41,29 @@ class GroupHelper:
         self.change_field_value("group_header", group.header)
         self.change_field_value("group_footer", group.footer)
 
-
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         driver = self.app.driver
         # открытие вкладки группы
         self.open_gruops_page()
-        #выбрать группу певрую
-        self.select_first_group()
+        # выбрать группу по индексу
+        self.select_group_by_index(index)
         # кликнуть удалить
         driver.find_element_by_name("delete").click()
         self.return_to_gruops_page()
+        # Сбрасываем кэш
+        self.group_cache = None
 
-    def modify_first_group(self,new_group_data):
+    def modify_first_group(self):
+        self.modify_first_group(0)
+
+    def modify_group_by_index(self,new_group_data,index):
         driver = self.app.driver
         self.open_gruops_page()
-        # выбрать группу певрую
-        self.select_first_group()
+        # выбрать группу по индексу
+        self.select_group_by_index(index)
         # открыть группу на редактирвоание
         driver.find_element_by_name("edit").click()
         #заполнить форму
@@ -62,14 +72,33 @@ class GroupHelper:
         driver.find_element_by_name("update").click()
         # возврат на вкладку грппы
         self.return_to_gruops_page()
+        # Сбрасываем кэш
+        self.group_cache = None
 
     def select_first_group(self):
         # выбрать группу певрую (отдельный метод)
         driver = self.app.driver
         driver.find_element_by_name("selected[]").click()
 
+    def select_group_by_index(self,index):
+        # выбрать группу любую группу по индексу в случ диапазоне
+        driver = self.app.driver
+        driver.find_elements_by_name("selected[]")[index].click()
+
     def count(self):
         driver = self.app.driver
         self.open_gruops_page()
         return len(driver.find_elements_by_name("selected[]"))
 
+    group_cache = None
+    def get_group_list(self):
+        # Добавление кэша
+        if self.group_cache is None:
+            driver = self.app.driver
+            self.open_gruops_page()
+            group_cache = []
+            for element in driver.find_elements_by_css_selector("span.group"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                group_cache.append(Group(name=text, id=id))
+        return list(group_cache)
