@@ -7,7 +7,7 @@ from python_traning.fixture.group import GroupHelper
 class Application:
     def __init__(self):
         self.driver = webdriver.Firefox()
-        # self.driver.implicitly_wait(5)             закомментировал ожидание появления элементов на странице
+        # self.driver.implicitly_wait(5)            # закомментировал ожидание появления элементов на странице
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)

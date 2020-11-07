@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from python_traning.model.group import Group
+import pytest
 
-def test_add_group(app):
+testdata=[Group(name="1", header="1", footer="1"),Group(name="", header="", footer="")]
+
+@pytest.mark.parametrize("group",testdata, ids=[str(x) for x in testdata])
+def test_add_group(app,group):
     # Создание новой группы
     old_list = app.group.get_group_list()
-    group = Group(name="1", header="1", footer="1")
+    # group = Group(name="1", header="1", footer="1")
     app.group.create(group)
     # Добвлена хеш функиция count()
     assert len(old_list)+1 == app.group.count()
@@ -13,13 +17,13 @@ def test_add_group(app):
     assert sorted(old_list, key=Group.id_or_max) == sorted(new_list, key=Group.id_or_max)
 
 
-def test_add_empty_group(app):
-    # Создание новой пустой группы
-    # Добавлено кэширование
-    old_list = app.group.get_group_list()
-    group = Group(name="", header="", footer="")
-    app.group.create(group)
-    new_list = app.group.get_group_list()
-    assert len(old_list)+1 == len(new_list)
-    old_list.append(group)
-    assert sorted(old_list, key=Group.id_or_max) == sorted(new_list, key=Group.id_or_max)
+# def test_add_empty_group(app):
+#     # Создание новой пустой группы
+#     # Добавлено кэширование
+#     old_list = app.group.get_group_list()
+#     group = Group(name="", header="", footer="")
+#     app.group.create(group)
+#     new_list = app.group.get_group_list()
+#     assert len(old_list)+1 == len(new_list)
+#     old_list.append(group)
+#     assert sorted(old_list, key=Group.id_or_max) == sorted(new_list, key=Group.id_or_max)
