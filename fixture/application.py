@@ -1,4 +1,6 @@
 from selenium import webdriver
+
+from python_traning.fixture.contact import ContactHelper
 from python_traning.fixture.session import SessionHelper
 from python_traning.fixture.group import GroupHelper
 
@@ -8,6 +10,7 @@ class Application:
         # self.driver.implicitly_wait(5)             закомментировал ожидание появления элементов на странице
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
+        self.contact = ContactHelper(self)
 
     def is_valid(self):
         try:
