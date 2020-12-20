@@ -6,8 +6,8 @@ from python_traning.model.group import Group
 
 # 1-й стопособ который был
 # @pytest.mark.parametrize("group",testdata, ids=[str(x) for x in testdata])
-def test_add_group(app,data_groups):
-    group = data_groups
+def test_add_group(app,json_groups):
+    group = json_groups
     # Создание новой группы
     old_list = app.group.get_group_list()
     # group = Group(name="1", header="1", footer="1")

@@ -3,6 +3,7 @@ import json
 from python_traning.fixture.application import Application
 import os.path
 import importlib
+import jsonpickle
 #scope="session"
 # C помощью этого параметра браузер запускается только один раз при выполнении тестов
 
@@ -41,6 +42,13 @@ def pytest_generate_tests(metafunc):
         if fixture.startswith("data_"):
             testdata = load_from_module(fixture[5:])
             metafunc.parametrize(fixture,testdata ,ids=[str(x) for x in testdata])
+        elif fixture.startswith("json_"):
+            testdata = load_from_json(fixture[5:])
+            metafunc.parametrize(fixture,testdata ,ids=[str(x) for x in testdata])
 
 def load_from_module(module):
-    return importlib.import_module("data.%s"% module).constant
+    return importlib.import_module("data.%s" % module).constant # Сейчас тут берутся конс, можно указать testdata
+
+def load_from_json(file):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/%s.json" % file)) as f:
+        return jsonpickle.decode(f.read())
