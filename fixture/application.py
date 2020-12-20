@@ -5,8 +5,15 @@ from python_traning.fixture.session import SessionHelper
 from python_traning.fixture.group import GroupHelper
 
 class Application:
-    def __init__(self):
-        self.driver = webdriver.Firefox()
+    def __init__(self, browser):
+        if browser == "firefox":
+            self.driver = webdriver.Firefox()
+        elif browser == "chrome":
+            self.driver = webdriver.Chrome()
+        elif browser == "ie":
+            self.driver = webdriver.Ie()
+        else:
+            raise ValueError("Не распознан браузер %s" % browser)
         # self.driver.implicitly_wait(5)            # закомментировал ожидание появления элементов на странице
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
